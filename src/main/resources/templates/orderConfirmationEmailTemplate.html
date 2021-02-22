@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+<!-- Bootstrap core CSS -->
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+<link href="/css/non-responsive.css" rel="stylesheet" />
+
+<link href="/css/font-awesome.min.css" rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link href="/css/style.css" rel="stylesheet" />
+
+<style>
+	table {
+	border-collapse: collapse;
+	}
+	
+	table, th, td {
+	border:1px solid black;}
+</style>
+</head>
+<body>
+<p>Poštovani, <span th:text="${user.firstName}"></span>,</p>
+<br/>
+<p>Hvala Vam što ste kupovali sa našeg Bookstora. Nadamo se da ste imali odličnu uslugu!</p>
+<p>Vaš broj narudžbe: <strong>#<span th:text="${order.id}"></span></strong>. Ovdje su detalji narudžbe:</p>
+<h2>Detalji narudžbe #<span th:text="${order.id}"></span></h2>
+<hr/>
+
+<table>
+	<tr>
+		<th>Detalji naplate</th>
+		<th>Informacije plaćanja</th>
+		<th>Adresa dostave</th>
+	</tr>
+	<tr>
+		<td>
+			<span th:text="${order.billingAddress.billingAddressName}"></span><br/>
+			<span th:text="${order.billingAddress.billingAddressStreet}"></span><br/>
+			<span th:text="${order.billingAddress.billingAddressCity}"></span><br/>
+			<span th:text="${order.billingAddress.billingAddressZipcode}"></span><br/>
+		</td>
+		<td>
+			<span th:text="${order.payment.holderName}"></span><br/>
+			<span th:text="${order.payment.type}"></span><br/>
+			<span th:text="${order.payment.cardNumber}"></span><br/>
+			<span th:text="${order.payment.expiryMonth}"></span><br/>
+			<span th:text="${order.payment.expiryYear}"></span><br/>
+		</td>
+		<td>
+			<span th:text="${order.shippingAddress.shippingAddressName}"></span><br/>
+			<span th:text="${order.shippingAddress.shippingAddressStreet}"></span><br/>
+			<span th:text="${order.shippingAddress.shippingAddressCity}"></span><br/>
+			<span th:text="${order.shippingAddress.shippingAddressZipcode}"></span><br/>
+		</td>
+	</tr>
+</table>
+
+<h3><strong>Sumiranje narudžbe</strong></h3>
+<table>
+<thead>
+	<tr>
+		<td><strong>Ime artikla</strong></td>
+		<td class="text-center"><strong>Cijena artikla</strong></td>
+		<td class="text-center"><strong>Količina artikla</strong></td>
+		<td class="text-right"><strong>Total</strong></td>
+	</tr>
+</thead>
+<tbody>
+	<tr th:each="cartItem : ${cartItemList}">
+		<td><span data-th-text="${cartItem.book.title}"></span></td>
+		<td class="text-center" data-th-text="${cartItem.book.price}"></td>
+		<td class="text-center" data-th-text="${cartItem.qty}"></td>
+		<td class="text-right" data-th-text="${cartItem.subtotal}"></td>
+	</tr>
+	<tr>
+		<td class="highrow"></td>
+		<td class="highrow"></td>
+		<td class="highrow text-center"><strong>Ukupno</strong></td>
+		<td class="highrow text-right" data-th-text="${order.orderTotal}"></td>
+	</tr>
+
+</tbody>
+</table>
+
+<br/>
+<p>Lijep pozdrav,</p>
+<p>Brcko Bookstore</p>
+<p>Since 2020</p>
+</body>
+</html>
