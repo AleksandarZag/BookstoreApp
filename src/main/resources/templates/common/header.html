@@ -11,58 +11,133 @@
 
 	<link href="/css/non-responsive.css" rel="stylesheet" />
 
+<!-- data table -->
+<link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+
+	<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+
 	<!-- Custom styles for this template -->
 	<link href="/css/style.css" rel="stylesheet" />
 
-	<link rel="icon" href="/images/Logo.png" />
+	<link rel="icon" href="/image/logo.png" />
 </head>
 
 <body>
-<div th:fragment="navbar">
-	<div class="page-top"
-		 style="width: 100%; height: 20px; background-color: #f46b42;"></div>
-	<!-- Static navbar -->
-	<nav class="navbar navbar-default navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">BRCKO BOOKSTORE</a>
-			</div>
-			<div id="navbar">
-				<ul class="nav navbar-nav navbar-left">
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-											data-toggle="dropdown" role="button" aria-haspopup="true"
-											aria-expanded="false">BOOKS <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Browse the bookshelf</a></li>
-							<li><a href="#">Store hours &#38; Directions</a></li>
-							<li><a href="#">FAQ</a></li>
+	<div th:fragment="navbar">
+		<div class="page-top"
+			style="width: 100%; height: 20px; background-color: #050505;"></div>
+		<!-- Static navbar -->
+		<nav class="navbar navbar-default navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" th:href="@{/}">BRČKO BOOKSTORE</a>
+				</div>
+				<div id="navbar">
+					<ul class="nav navbar-nav navbar-left">
+						<li class="dropdown"><a th:href="@{/bookshelf}"
+							class="dropdown-toggle" data-toggle="dropdown" role="button"
+							aria-haspopup="true" aria-expanded="false">BOOKS <span
+								class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/bookshelf}">Pogledaj knjige</a></li>
+								<li><a th:href="@{/hours}">Radno vrijeme&#38; Uputstva</a></li>
+								<li><a th:href="@{/faq}">FAQ</a></li>
 
-						</ul></li>
-					<form class="navbar-form">
-						<div class="form-group">
-							<input type="text" name="keyword" class="form-control"
-								   placeholder="Book title" />
-						</div>
-						<button type="submit" class="btn btn-default">Search</button>
-					</form>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">SHOPPING CART</a></li>
-					<li><a sec:authorize="isAnonymous()" th:href="@{/login}">MY ACCOUNT</a></li>
-					<li><a sec:authorize="isAuthenticated()" th:href="@{/myProfile}">MY ACCOUNT</a></li>
-					<li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">LOGOUT</a></li>
+							</ul></li>
+						<form class="navbar-form" th:action="@{/searchBook}" method="post">
+							<div class="form-group">
+								<input type="text" name="keyword" class="form-control"
+									placeholder="Naziv knjige" />
+							</div>
+							<button type="submit" class="btn btn-default">Pretraži</button>
+						</form>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a th:href="@{/shoppingCart/cart}">ŠOPING KORPA</a></li>
+						<li><a sec:authorize="isAnonymous()" th:href="@{/login}">MOJ PROFIL</a></li>
+						<li><a sec:authorize="isAuthenticated()"
+							th:href="@{/myProfile}">MOJ PROFIL</a></li>
+						<li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">ODJAVI SE</a></li>
+					</ul>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+			<!--/.container-fluid -->
+		</nav>
+	</div>
+
+	<div th:fragment="footer">
+		<br />
+		<br />
+		<footer>
+			<div class="row">
+				<div class="col-xs-3 footerleft">
+					<div class="logofooter">
+						<a th:href="@{/}"><img class="img-responsive"
+							src="/image/logo.png" style="width: 200px;" /></a>
+					</div>
+					<p>
+						Brčko Bookstore <br />Samo najbolje za naše korisnike.
+					</p>
+				</div>
+				<div class="col-xs-3 paddingtop-bottom">
+					<h6 class="heading7">CONTACT</h6>
+					<ul class="post">
+						<p>
+							<i class="fa fa-map-pin"></i> Bulevar Mira 35<br /> Brčko distrikt, BiH
+							02112
+						</p>
+						<p>
+							<i class="fa fa-phone"></i> Broj : +387 61 999 9999
+						</p>
+						<p>
+							<i class="fa fa-envelope"></i> E-mail : info@brckobookstore.com
+						</p>
+					</ul>
+				</div>
+				<div class="col-xs-3 paddingtop-bottom">
+					<h6 class="heading7">LINK</h6>
+					<ul class="footer-ul">
+						<li><a th:href="@{/hours}"> Sati i lokacija</a></li>
+						<li><a href="#"> Uvjeti &#38; korištenja</a></li>
+						<li><a th:href="@{/faq}"> Često postavljana pitanja</a></li>
+					</ul>
+				</div>
+				<div class="col-xs-3 paddingtop-bottom">
+					<h6 class="heading7">Radno vrijeme</h6>
+					<div class="post">
+						<p>Ponedjeljak - Subota: 9am - 11pm</p>
+						<p>Nedjelja: 10am - 10pm</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<div class="copyright">
+			<div class="col-md-6">
+				<p>© 2021 - Sva prava pridržana</p>
+			</div>
+			<div class="col-md-6">
+				<ul class="bottom_ul">
+					<li><a href="#">O nama</a></li>
+					<li><a href="#">Blog</a></li>
+					<li><a href="#">Faq's</a></li>
+					<li><a href="#">Kontaktirajte nas</a></li>
 				</ul>
 			</div>
-			<!--/.nav-collapse -->
 		</div>
-		<!--/.container-fluid -->
-	</nav>
-</div>
+	</div>
 
-<div th:fragment="body-bottom-scripts">
-	<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
-</div>
+	<div th:fragment="body-bottom-scripts">
+		<script th:src="@{/js/jquery.min.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+
+		<script th:src="@{/js/scripts.js}"></script>
+
+		<!-- data table -->
+		<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+	</div>
 </body>
 </html>
